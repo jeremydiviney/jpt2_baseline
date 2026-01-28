@@ -27,7 +27,7 @@ from datasources.fineweb10B import load_hf_dataset
 from benchamarks.benchmark_hellaswag import evaluate_hellaswag
 from benchamarks.benchmark_winogrande import evaluate_winogrande
 
-from models.jpt1 import GPT2
+from models.gpt2 import GPT2
 
 from datasources.fineweb10B import get_or_train_tokenizer, Fineweb10BDataset
 from helpers.experiments import run_experiment, count_parameters, create_experiments
