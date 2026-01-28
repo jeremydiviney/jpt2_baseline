@@ -1,0 +1,29 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment
+.env
+.venv
+env/
+venv/
+
+# Caches
+data_cache/
+tokenizer_cache/
+meta_cache/
+
+# Saved models
+saved_models/
+
+# W&B
+wandb/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
