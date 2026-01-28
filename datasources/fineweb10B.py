@@ -246,7 +246,9 @@ class Fineweb10BDataset(Dataset):
 
         pre_data_row_idx = bisect_left(self.selection_table, idx)
 
-        relative_data_chunk = idx - self.selection_table[pre_data_row_idx]
+        # Get the previous cumsum to calculate relative position within this document
+        prev_cumsum = 0 if pre_data_row_idx == 0 else self.selection_table[pre_data_row_idx - 1]
+        relative_data_chunk = idx - prev_cumsum
 
         data_row_idx = int(self.selection_table_indices[pre_data_row_idx])  # lookup the master data index for the row
 
