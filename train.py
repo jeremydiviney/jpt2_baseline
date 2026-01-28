@@ -27,7 +27,7 @@ from datasources.fineweb10B import load_hf_dataset
 from benchamarks.benchmark_hellaswag import evaluate_hellaswag
 from benchamarks.benchmark_winogrande import evaluate_winogrande
 
-from models.gpt2 import GPT2
+from models.jpt2 import JPT2
 
 from datasources.fineweb10B import get_or_train_tokenizer, Fineweb10BDataset
 from helpers.experiments import run_experiment, count_parameters, create_experiments
@@ -726,7 +726,7 @@ if __name__ == "__main__":
         )
 
         # Create model
-        gpt_model = GPT2(
+        jpt_model = JPT2(
             token_space_dim=token_space_dim,
             seq_len=seq_len,
             embed_dim=jpt_embed_dim,
@@ -741,11 +741,11 @@ if __name__ == "__main__":
         should_compile = sys.gettrace() is None
         if should_compile:
             print("Compiling models...")
-            gpt_model = torch.compile(gpt_model)
+            jpt_model = torch.compile(jpt_model)
             loss_fn = torch.compile(loss_fn)
             print("Models compiled!")
 
-        project_name = "gpt2_baseline"
+        project_name = "jpt2_baseline"
         exp_name = f"{project_name}-sl:{experiment['seq_len']}-e:{experiment['epochs']}-bs:{experiment['batch_size']}-lr:{experiment['lr']}-hs:{experiment['num_head']}-nl:{experiment['n_layers']}-ed:{experiment['jpt_embed_dim']}-ts:{experiment['token_space_dim']}"
 
         # Create distributed samplers if running distributed
@@ -776,7 +776,7 @@ if __name__ == "__main__":
         def train_model_lambda(wandb):
             model = train_model(
                 wandb,
-                gpt_model,
+                jpt_model,
                 train_dataloader,
                 val_dataloader,
                 experiment,

@@ -90,7 +90,7 @@ class TransformerDecoderCustom(nn.Module):
         return x
 
 
-class GPT2(nn.Module):
+class JPT2(nn.Module):
     def __init__(
         self,
         seq_len: int,
