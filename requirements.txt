@@ -1,0 +1,14 @@
+# Core dependencies for JPT2 training
+# Install PyTorch separately with the appropriate CUDA index URL:
+#   pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+
+transformers
+tokenizers
+datasets
+wandb
+psutil
+python-dotenv
+pydantic
+scikit-learn
+tqdm
+PyYAML
