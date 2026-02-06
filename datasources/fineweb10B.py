@@ -42,7 +42,7 @@ def chunked(iterator, chunk_size):
 
 def build_selection_table(data, tokenizer, dataset_name: str):
     vocab_size = len(tokenizer.get_vocab())
-    cache_filename = f"meta_cache/jpt1/{dataset_name}/selection_table_vocab_{vocab_size}.pkl"
+    cache_filename = f"meta_cache/jpt2/{dataset_name}/selection_table_vocab_{vocab_size}.pkl"
 
     if os.path.exists(cache_filename):
         print(f"Loading selection table from cache: {cache_filename}")

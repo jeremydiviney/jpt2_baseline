@@ -478,11 +478,11 @@ def train_model(
         # Save both models
         save_dir = "saved_models"
         timestamp = datetime.now().isoformat()
-        model_name = f"jpt1_{timestamp}"
+        model_name = f"jpt2_{timestamp}"
 
         # Get model without DDP wrapper for saving
         model_to_save = model.module if distributed else model
-        save_model(model_to_save, save_dir, f"{model_name}_jpt1")
+        save_model(model_to_save, save_dir, f"{model_name}_jpt2")
 
     if distributed:
         torch.distributed.barrier()

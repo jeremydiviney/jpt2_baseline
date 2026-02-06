@@ -9,8 +9,8 @@ from enum import Enum
 import math
 from typing import Dict, Any, Optional, List, Union
 
-# Assume your JPT1 model and inference_step function are defined elsewhere
-# from models.jpt1 import JPT1, JPT1ModelType
+# Assume your JPT2 model and inference_step function are defined elsewhere
+# from models.jpt2 import JPT2, JPT2ModelType
 # from training_script import inference_step # Or wherever it's defined
 
 # --- Configuration ---

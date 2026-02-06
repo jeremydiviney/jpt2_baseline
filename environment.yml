@@ -1,4 +1,4 @@
-name: jpt1
+name: jpt2
 channels:
   - conda-forge
   - defaults
