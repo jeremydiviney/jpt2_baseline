@@ -665,7 +665,7 @@ if __name__ == "__main__":
         "weight_decay": [0.1],
     }
 
-    experiments = create_experiments(mode="single", **experiments)
+    experiments = create_experiments(mode="paired", **experiments)
 
     enable_torch_optimizations()
     setup_flash_attention()

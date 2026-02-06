@@ -240,7 +240,8 @@ class Fineweb10BDataset(Dataset):
         self.selection_table = np.cumsum(self.stride_counts)
 
         self.token_list = tokenizer.get_vocab()
-        self.token_count = self.selection_table[-1].item()
+        self.total_samples = self.selection_table[-1].item()
+        self.token_count = int(np.sum(self.token_counts))
 
     def get_data_chunk(self, idx: int):
 
@@ -293,7 +294,7 @@ class Fineweb10BDataset(Dataset):
 
     def __len__(self) -> int:
 
-        return self.selection_table[-1]
+        return self.total_samples
 
     def __getitem__(self, idx: int) -> tuple[torch.Tensor, torch.Tensor]:
 
