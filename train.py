@@ -29,7 +29,7 @@ from benchamarks.benchmark_winogrande import evaluate_winogrande
 
 from models.jpt2 import JPT2
 
-from datasources.fineweb10B import get_or_train_tokenizer, Fineweb10BDataset
+from datasources.fineweb10B import get_or_train_tokenizer, Fineweb10BDataset, build_selection_table
 from helpers.experiments import run_experiment, count_parameters, create_experiments
 from helpers.training import (
     save_model,
@@ -701,6 +701,13 @@ if __name__ == "__main__":
         hf_dataset = load_hf_dataset(dataset_name)
         # Other processes wait for main process to finish tokenizer
         tokenizer = Tokenizer.from_file(f"tokenizer_cache/{dataset_name}_tokenizer_{vocab_size}.json")
+
+        # Build selection table on rank 0 first, then other ranks load from cache
+        if is_main_process(distributed, local_rank):
+            build_selection_table(hf_dataset["train"], tokenizer, dataset_name)
+
+        if distributed:
+            torch.distributed.barrier()
 
         loss_fn = nn.CrossEntropyLoss(ignore_index=tokenizer.token_to_id("[PAD]"))
 
