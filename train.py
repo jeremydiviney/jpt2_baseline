@@ -687,19 +687,19 @@ if __name__ == "__main__":
 
         dataset_name = "fineweb-10BT-edu"
 
-        # Only load/train tokenizer on main process to avoid conflicts
+        # All ranks load the dataset concurrently (HF handles caching/locking)
+        hf_dataset = load_hf_dataset(dataset_name)
+
+        # Only train tokenizer on main process to avoid conflicts
         if is_main_process(distributed, local_rank):
-            hf_dataset = load_hf_dataset(dataset_name)
             text_corpus_iterator = (item["text"] for item in hf_dataset["train"])
-            tokenizer = get_or_train_tokenizer(
+            get_or_train_tokenizer(
                 text_corpus_iterator, vocab_size, f"tokenizer_cache/{dataset_name}_tokenizer_{vocab_size}.json"
             )
 
         if distributed:
             torch.distributed.barrier()
 
-        hf_dataset = load_hf_dataset(dataset_name)
-        # Other processes wait for main process to finish tokenizer
         tokenizer = Tokenizer.from_file(f"tokenizer_cache/{dataset_name}_tokenizer_{vocab_size}.json")
 
         # Build selection table on rank 0 first, then other ranks load from cache
