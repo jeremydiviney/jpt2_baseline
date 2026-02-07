@@ -1,4 +1,6 @@
 import os
+from datetime import timedelta
+
 import torch
 import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
@@ -12,7 +14,8 @@ def setup_distributed(rank, world_size):
     # os.environ["MASTER_PORT"] = "12355"
 
     # Initialize the process group
-    dist.init_process_group("nccl", rank=rank, world_size=world_size)
+    # Extended timeout to cover long setup steps (selection table build ~20min)
+    dist.init_process_group("nccl", rank=rank, world_size=world_size, timeout=timedelta(minutes=30))
     print(f"Initialized process group with rank {rank} and world size {world_size}")
 
 
